@@ -1,37 +1,50 @@
-# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
-# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
-
 name: CI
-
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]  
-  release:
-    types: [created]
+    branches: [ main ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-      - run: npm ci
-      - run: npm test
+    strategy:
+      matrix:
+        node-version: [18.x]   # Version active LTS
 
-  publish-npm:
-    needs: build
-    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+    - uses: actions/checkout@v4
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v4
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Install dependencies 📦
+      run: |
+        cd my-app
+        npm ci
+
+    - name: Build the app 🏗
+      run: |
+        cd my-app
+        npm run build
+
+    - name: Run unit/component tests 🔸
+      run: |
+        cd my-app
+        npm run test
+
+    - name: Start the app 📤
+      run: |
+        cd my-app
+        npm start &
+        npx wait-on http://localhost:3000 --timeout 60000
+
+    - name: Run E2E / Screener tests
+      run: |
+        cd my-app
+        npx screener-runner
+      env:
+        SCREENER_API_KEY: ${{ secrets.SCREENER_API_KEY }}
+        SAUCE_USERNAME: ${{ secrets.SAUCE_USERNAME }}
+        SAUCE_ACCESS_KEY: ${{ secrets.SAUCE_ACCESS_KEY }}
