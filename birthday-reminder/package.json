@@ -33,7 +33,7 @@
         ]
     },
     "devDependencies": {
-        "@wdio/cli": "^7.16.13",
+        "@wdio/cli": "^9.27.2",
         "@wdio/local-runner": "^7.16.13",
         "@wdio/mocha-framework": "^7.16.13",
         "@wdio/sauce-service": "^7.16.13",
