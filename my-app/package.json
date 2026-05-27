@@ -7,6 +7,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
+    "@wdio/cli": "^9.27.1",
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-scripts": "^5.0.0",
@@ -16,7 +17,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "wdio": "wdio run ./wdio.conf.js"
   },
   "eslintConfig": {
     "extends": [
@@ -35,5 +37,10 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@wdio/local-runner": "^9.27.1",
+    "@wdio/mocha-framework": "^9.27.1",
+    "@wdio/spec-reporter": "^9.27.1"
   }
 }
