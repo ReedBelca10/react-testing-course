@@ -20,5 +20,10 @@
   "homepage": "https://github.com/ReedBelca10/react-testing-course#readme",
   "dependencies": {
     "create-react-app": "^5.1.0"
+  },
+  "devDependencies": {
+    "@wdio/local-runner": "^9.27.2",
+    "@wdio/mocha-framework": "^9.27.2",
+    "@wdio/spec-reporter": "^9.27.2"
   }
 }
